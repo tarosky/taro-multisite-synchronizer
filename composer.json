@@ -1,0 +1,18 @@
+{
+    "name": "tarosky/taro-multisite-synchronizer",
+    "type": "wordpress-plugin",
+    "license": "GPL-3.0-or-later",
+    "autoload": {
+        "psr-0": {
+            "Tarosky\\TaroMultisiteSynchronizer\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Tarosky INC",
+            "email": "info@tarosky.co.jp"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}
