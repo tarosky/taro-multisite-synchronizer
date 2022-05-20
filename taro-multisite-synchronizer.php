@@ -23,4 +23,10 @@ add_action( 'plugins_loaded', function() {
 	if ( is_main_site() ) {
 		\Tarosky\TaroMultisiteSynchronizer\Hooks\CommentScreen::initialize();
 	}
+	// Blog updated.
+	\Tarosky\TaroMultisiteSynchronizer\Hooks\BlogUpdated::initialize();
+
+	if ( defined( 'WP_CLI' ) && WP_CLI ) {
+		WP_CLI::add_command( 'taroms', \Tarosky\TaroMultisiteSynchronizer\Utility\Commands::class );
+	}
 } );
