@@ -1,1 +1,5 @@
 /vendor/
+/dist/
+/node_modules/
+package-lock.json
+wp-dependencies.json
