@@ -21,14 +21,16 @@ function taroms_root_dir() {
  *
  * @return void
  */
-function taroms_get_template_part( $name, $suffix = '', $args = [] ) {
-	$dirs = [
-		get_template_directory(),
-		taroms_root_dir(),
-	];
-	if ( get_template_directory() !== get_stylesheet_directory() ) {
-		array_unshift( $dirs, get_stylesheet_directory() );
+function taroms_get_template_part( $name, $suffix = '', $args = [], $dirs = [] ) {
+	if ( empty( $dirs ) ) {
+		$dirs = [
+			get_template_directory(),
+		];
+		if ( get_template_directory() !== get_stylesheet_directory() ) {
+			array_unshift( $dirs, get_stylesheet_directory() );
+		}
 	}
+	$dirs[] = taroms_root_dir();
 	$dirs = array_map( function( $dir ) {
 		return trailingslashit( $dir ) . 'template-parts/taroms';
 	}, $dirs );
@@ -66,6 +68,11 @@ function taroms_blog_list( $args = [], $class = 'taroms-blogs' ) {
 	}
 	$out = [];
 	$out[] = sprintf( '<div class="%s">', esc_attr( $class ) );
+	// Keep directory.
+	$dirs = [ get_template_directory() ];
+	if ( get_template_directory() !== get_stylesheet_directory() ) {
+		array_unshift( $dirs, get_stylesheet_directory() );
+	}
 	ob_start();
 	foreach ( $blogs as $blog ) {
 		switch_to_blog( $blog->blog_id );
@@ -73,7 +80,7 @@ function taroms_blog_list( $args = [], $class = 'taroms-blogs' ) {
 			'args'  => $args,
 			'blog'  => $blog,
 			'class' => $class,
-		] );
+		], $dirs );
 		restore_current_blog();
 	}
 	$out[] = ob_get_contents();
