@@ -148,17 +148,21 @@ SQL;
 	}
 
 	/**
-	 * Get latest query
+	 * Get latest query.
 	 *
 	 * @param array $args
 	 *
-	 * @return array
+	 * @return \stdClass[]
 	 */
 	public function get_recent( $args = array() ) {
 		$query  = $this->get_recent_query( $args );
 		$result = $this->db->get_results( $query );
 
-		return $result;
+		return array_map( function( $row ) {
+			$row->blog_id = (int) $row->blog_id;
+			$row->post_id = (int) $row->post_id;
+			return $row;
+		}, $result );
 	}
 
 	/**
