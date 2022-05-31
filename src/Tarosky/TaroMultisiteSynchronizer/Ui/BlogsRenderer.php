@@ -89,7 +89,7 @@ class BlogsRenderer extends RendererPattern {
 	 *
 	 * @return string
 	 */
-	public function render_callback( $attributes = [], $content ) {
+	public function render_callback( $attributes = [], $content = '' ) {
 		return taroms_blog_list( $attributes ) ?: __( 'No Blog found.', 'taroms' );
 	}
 

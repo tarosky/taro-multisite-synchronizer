@@ -31,6 +31,7 @@ add_action( 'plugins_loaded', function() {
 	\Tarosky\TaroMultisiteSynchronizer\Hooks\BlogUpdated::initialize();
 	// Blocks.
 	\Tarosky\TaroMultisiteSynchronizer\Ui\BlogsRenderer::initialize();
+	\Tarosky\TaroMultisiteSynchronizer\Ui\NetworkPostsRenderer::initialize();
 
 	if ( defined( 'WP_CLI' ) && WP_CLI ) {
 		WP_CLI::add_command( 'taroms', \Tarosky\TaroMultisiteSynchronizer\Utility\Commands::class );

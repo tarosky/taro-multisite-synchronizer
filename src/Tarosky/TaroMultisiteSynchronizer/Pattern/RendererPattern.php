@@ -162,7 +162,7 @@ abstract class RendererPattern extends Singleton {
 	 *
 	 * @return string
 	 */
-	public function render_callback( $attributes = [], $content ) {
+	public function render_callback( $attributes = [], $content = '' ) {
 		return '<p>' . esc_html__( 'Override this function.', 'taroms' ) . '</p>';
 	}
 
