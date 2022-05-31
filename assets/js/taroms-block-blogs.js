@@ -60,6 +60,18 @@ registerBlockType( TaroMsBlockBlogsVars.name, {
 									label: __( 'Ascendant', 'taroms' ),
 								},
 							] } />
+						<SelectControl label={ __( 'This Site', 'taroms' ) } value={ attributes.exclude_self }
+							onChange={ ( exclude_self ) => setAttributes( { exclude_self } ) }
+							options={ [
+								{
+									value: true,
+									label: __( 'Exclude this site', 'taroms' ),
+								},
+								{
+									value: false,
+									label: __( 'Include this site', 'taroms' ),
+								}
+							] } />
 					</PanelBody>
 				</InspectorControls>
 				<div className="taroms-blogs" style={ { 'pointer-events': 'none' } }>

@@ -78,6 +78,11 @@ class BlogsRenderer extends RendererPattern {
 				'default' => 'DESC',
 				'description' => __( 'Order', 'taroms' ),
 			],
+			'exclude_self' => [
+				'type'    => 'boolean',
+				'default' => true,
+				'description' => __( 'Exclude Self', 'taroms' ),
+			],
 		];
 	}
 
@@ -90,6 +95,11 @@ class BlogsRenderer extends RendererPattern {
 	 * @return string
 	 */
 	public function render_callback( $attributes = [], $content = '' ) {
+		if ( ! empty( $attributes['exclude_self'] ) ) {
+			// Exclude current blog.
+			$attributes['site__not_in'] = get_current_blog_id();
+		}
+		unset( $attributes['exclude_self'] );
 		return taroms_blog_list( $attributes ) ?: __( 'No Blog found.', 'taroms' );
 	}
 
