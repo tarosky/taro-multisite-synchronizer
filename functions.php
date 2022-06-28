@@ -67,26 +67,21 @@ function taroms_blog_list( $args = [], $class = 'taroms-blogs' ) {
 		return '';
 	}
 	$out = [];
-	$out[] = sprintf( '<div class="%s">', esc_attr( $class ) );
 	// Keep directory.
 	$dirs = [ get_template_directory() ];
 	if ( get_template_directory() !== get_stylesheet_directory() ) {
 		array_unshift( $dirs, get_stylesheet_directory() );
 	}
 	ob_start();
-	foreach ( $blogs as $blog ) {
-		switch_to_blog( $blog->blog_id );
-		taroms_get_template_part( 'loop', 'site', [
-			'args'  => $args,
-			'blog'  => $blog,
-			'class' => $class,
-		], $dirs );
-		restore_current_blog();
-	}
-	$out[] = ob_get_contents();
+	taroms_get_template_part( 'list', 'sites', [
+		'args'  => $args,
+		'blogs' => $blogs,
+		'dirs'  => $dirs,
+		'class' => $class,
+	], $dirs );
+	$out = ob_get_contents();
 	ob_end_clean();
-	$out[] = '</div>';
-	return implode( "\n", $out );
+	return $out;
 }
 
 /**
