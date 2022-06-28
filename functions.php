@@ -31,10 +31,10 @@ function taroms_get_template_part( $name, $suffix = '', $args = [], $dirs = [] )
 		}
 	}
 	$dirs[] = taroms_root_dir();
-	$dirs = array_map( function( $dir ) {
+	$dirs   = array_map( function( $dir ) {
 		return trailingslashit( $dir ) . 'template-parts/taroms';
 	}, $dirs );
-	$files = [ $name ];
+	$files  = [ $name ];
 	if ( $suffix ) {
 		array_unshift( $files, $name . '-' . $suffix );
 	}
@@ -91,8 +91,8 @@ function taroms_blog_list( $args = [], $class = 'taroms-blogs' ) {
  * @return WP_Site[]
  */
 function taroms_get_blogs( $args = [] ) {
-	$args = array_merge( [
-		'public'  =>  1,
+	$args  = array_merge( [
+		'public'  => 1,
 		'number'  => 10,
 		'orderby' => 'last_updated',
 		'order'   => 'DESC',
@@ -129,7 +129,7 @@ function taroms_network_posts_list( $args = [], $class = 'taroms-network-post' )
 	if ( get_template_directory() !== get_stylesheet_directory() ) {
 		array_unshift( $dirs, get_stylesheet_directory() );
 	}
-	$out = [];
+	$out   = [];
 	$out[] = sprintf( '<div class="%s">', esc_attr( $class ) );
 	ob_start();
 	foreach ( $posts as $network_post ) {

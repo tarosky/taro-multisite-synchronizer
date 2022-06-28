@@ -58,18 +58,18 @@ class NetworkPostsRenderer extends RendererPattern {
 				'description' => __( 'Number of posts', 'taroms' ),
 			],
 			'exclude_parent' => [
-				'type' => 'boolean',
-				'default' => true,
+				'type'        => 'boolean',
+				'default'     => true,
 				'description' => __( 'Exclude main site', 'taroms' ),
 			],
-			'group_by' => [
-				'type' => 'boolean',
-				'default' => true,
+			'group_by'       => [
+				'type'        => 'boolean',
+				'default'     => true,
 				'description' => __( 'Group by blog', 'taroms' ),
 			],
-			'blog_ids' => [
-				'type' => 'string',
-				'default' => '',
+			'blog_ids'       => [
+				'type'        => 'string',
+				'default'     => '',
 				'description' => __( 'Blog ids to include', 'taroms' ),
 			],
 		];

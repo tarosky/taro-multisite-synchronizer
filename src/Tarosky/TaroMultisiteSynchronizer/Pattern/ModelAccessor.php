@@ -13,16 +13,16 @@ use Tarosky\TaroMultisiteSynchronizer\Models\Blogs;
  * @property-read Blogs $blogs
  * @property-read BlogComments $comments
  */
-final class ModelAccessor extends Singleton
-{
+final class ModelAccessor extends Singleton {
+
 	/**
 	 * Getter
 	 *
 	 * @param string $name
 	 * @return mixed
 	 */
-	public function __get($name){
-		switch( $name ){
+	public function __get( $name ) {
+		switch ( $name ) {
 			case 'blogs':
 				return Blogs::get_instance();
 				break;

@@ -73,10 +73,11 @@ abstract class Model extends Singleton {
 		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 		dbDelta( $this->create_sql() );
 		update_option( $this->version_key, $this->version );
-		add_action( 'admin_notices', function (){
+		add_action( 'admin_notices', function () {
 			printf(
 				'<div class="updated">%s</div>',
 				sprintf(
+					// translators: %s is table name.
 					esc_html__( 'Database %s is updated.', 'taroms' ),
 					esc_html( $this->table )
 				)
@@ -90,13 +91,17 @@ abstract class Model extends Singleton {
 	 * @return bool
 	 */
 	protected function needs_update() {
-		return current_user_can( 'manage_options' ) && version_compare( $this->version, $this->current_version, '>' )
-			   && (
-				   ( $this->only_parent && is_main_site() )
-				   ||
-				   ! $this->only_parent
-			   );
-
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return false;
+		}
+		if ( version_compare( $this->version, $this->current_version, '<=' ) ) {
+			return false;
+		}
+		return (
+			( $this->only_parent && is_main_site() )
+			||
+			! $this->only_parent
+		);
 	}
 
 	/**

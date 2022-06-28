@@ -34,7 +34,7 @@ trait TemplatePart {
 		if ( get_template_directory() !== get_stylesheet_directory() ) {
 			array_unshift( $dirs, get_stylesheet_directory() );
 		}
-		$dirs = array_map( function( $dir ) {
+		$dirs  = array_map( function( $dir ) {
 			return trailingslashit( $dir ) . 'template-parts/taroms';
 		}, $dirs );
 		$files = [ $name ];

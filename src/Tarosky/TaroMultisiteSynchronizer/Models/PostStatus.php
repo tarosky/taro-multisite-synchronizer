@@ -56,7 +56,7 @@ SQL;
 	 * @param \WP_Post $post
 	 */
 	public function save_post( $post_id, \WP_Post $post ) {
-		if ( 'post' == $post->post_type ) {
+		if ( 'post' === $post->post_type ) {
 			// We should save post.
 			$blog_id = get_current_blog_id();
 			$this->sync( $blog_id, $post );
@@ -80,7 +80,7 @@ SQL;
 SQL;
 
 		return $this->db->query( $this->db->prepare( $query, $blog_id, $post->ID, $post->post_status, $post->post_date,
-			$post->post_status, $post->post_date, $post->post_modified ) );
+		$post->post_status, $post->post_date, $post->post_modified ) );
 
 	}
 
@@ -118,17 +118,17 @@ SQL;
 		// Build where
 		$wheres = array(
 			$this->db->prepare( 'p.post_status = %s', $args['post_status'] ),
-			"b.public > 1",
-			"(b.archived + b.mature + b.spam + b.deleted) = 0",
+			'b.public > 1',
+			'(b.archived + b.mature + b.spam + b.deleted) = 0',
 		);
 		if ( $args['exclude_parent'] ) {
-			$wheres[] = "p.blog_id > 1";
+			$wheres[] = 'p.blog_id > 1';
 		}
 		if ( $args['blog_ids'] ) {
 			$wheres[] = sprintf( '( p.blog_id IN (%s) )', implode( ', ', array_map( 'intval', $args['blog_ids'] ) ) );
 		}
-		$where_clause = "WHERE " . implode( " AND ", $wheres );
-		$group_by     = $args['group_by'] ? "GROUP BY posts.blog_id" : '';
+		$where_clause = 'WHERE ' . implode( ' AND ', $wheres );
+		$group_by     = $args['group_by'] ? 'GROUP BY posts.blog_id' : '';
 		$query        = <<<SQL
 			SELECT SQL_CALC_FOUND_ROWS
 			 posts.blog_id, MAX( posts.post_id ) AS post_id, posts.post_status, MAX( posts.post_date ) AS post_date, posts.updated FROM (

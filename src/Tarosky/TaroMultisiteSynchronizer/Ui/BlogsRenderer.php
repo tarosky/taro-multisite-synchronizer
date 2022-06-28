@@ -63,24 +63,24 @@ class BlogsRenderer extends RendererPattern {
 	 */
 	protected function get_block_attributes() {
 		return [
-			'number' => [
+			'number'       => [
 				'type'        => 'integer',
 				'default'     => 10,
 				'description' => __( 'Count of blogs.', 'taroms' ),
 			],
-			'orderby' => [
-				'type' => 'string',
-				'default' => 'last_updated',
+			'orderby'      => [
+				'type'        => 'string',
+				'default'     => 'last_updated',
 				'description' => __( 'Order by', 'taroms' ),
 			],
-			'order' => [
-				'type' => 'string',
-				'default' => 'DESC',
+			'order'        => [
+				'type'        => 'string',
+				'default'     => 'DESC',
 				'description' => __( 'Order', 'taroms' ),
 			],
 			'exclude_self' => [
-				'type'    => 'boolean',
-				'default' => true,
+				'type'        => 'boolean',
+				'default'     => true,
 				'description' => __( 'Exclude Self', 'taroms' ),
 			],
 		];

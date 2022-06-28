@@ -117,12 +117,14 @@ SQL;
 	}
 
 	/**
+	 * Sync status when transition occurs.
+	 *
 	 * @param string $new_status
 	 * @param string $old_status
 	 * @param \stdClass|\WP_Comment $comment
 	 */
 	public function transition_status( $new_status, $old_status, $comment ) {
-		if ( 'delete' != $new_status ) {
+		if ( 'delete' !== $new_status ) {
 			$this->sync( get_current_blog_id(), $comment );
 		}
 	}
@@ -155,7 +157,7 @@ SQL;
 			'comment_agent'        => '%s',
 			'comment_type'         => '%s',
 			'comment_parent'       => '%d',
-			'user_id'              => '%d'
+			'user_id'              => '%d',
 		);
 		$data   = array( 'blog_id' => $blog_id );
 		$where  = array( '%d' );
@@ -165,8 +167,8 @@ SQL;
 		}
 		if ( $this->db->get_var( $this->db->prepare( $query, $blog_id, $comment->comment_ID ) ) ) {
 			// Record exists. Update
-			unset( $data[ 'blog_id' ] );
-			unset( $data[ 'comment_ID' ] );
+			unset( $data['blog_id'] );
+			unset( $data['comment_ID'] );
 			array_shift( $where );
 			array_shift( $where );
 

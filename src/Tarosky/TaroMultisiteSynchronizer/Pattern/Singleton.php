@@ -20,7 +20,7 @@ abstract class Singleton {
 	 *
 	 * @param array $settings
 	 */
-	final protected function __construct( array $settings = array() ){
+	final protected function __construct( array $settings = array() ) {
 		$this->init();
 	}
 
@@ -39,7 +39,7 @@ abstract class Singleton {
 	 * @param array $settings
 	 * @return static
 	 */
-	final public static function get_instance( array $settings = array() ){
+	final public static function get_instance( array $settings = array() ) {
 		$class_name = get_called_class();
 		if ( ! isset( self::$instances[ $class_name ] ) ) {
 			self::$instances[ $class_name ] = new $class_name( $settings );
@@ -54,10 +54,11 @@ abstract class Singleton {
 	 *
 	 * @return static
 	 */
-	final public static function initialize( array $settings = array() ){
+	final public static function initialize( array $settings = array() ) {
 		$class_name = get_called_class();
 		if ( isset( self::$instances[ $class_name ] ) ) {
-			trigger_error( sprintf( __( 'Do not call %s::init() again and again.', 'taroms' ), $class_name), E_USER_WARNING );
+			// translators: %s is PHP class name.
+			trigger_error( sprintf( __( 'Do not call %s::init() again and again.', 'taroms' ), $class_name ), E_USER_WARNING );
 		}
 		return self::get_instance( $settings );
 	}

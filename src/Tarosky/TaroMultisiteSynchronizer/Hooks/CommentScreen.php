@@ -23,11 +23,11 @@ class CommentScreen extends AdminParts {
 	public function admin_init() {
 		// Change menu name
 		global $menu, $submenu;
-		if ( isset( $menu[ 25 ][ 0 ] ) ) {
-			$menu[ 25 ][ 0 ] = str_replace( 'NEWSの', '', $menu[ 25 ][ 0 ] );
+		if ( isset( $menu[25][0] ) ) {
+			$menu[25][0] = str_replace( 'NEWSの', '', $menu[25][0] );
 		}
-		if ( isset( $submenu[ 'edit-comments.php' ][ 0 ][ 0 ] ) ) {
-			$submenu[ 'edit-comments.php' ][ 0 ][ 0 ] = 'このブログのコメント';
+		if ( isset( $submenu['edit-comments.php'][0][0] ) ) {
+			$submenu['edit-comments.php'][0][0] = 'このブログのコメント';
 		}
 		// Load script
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
@@ -37,9 +37,14 @@ class CommentScreen extends AdminParts {
 		add_action( 'wp_ajax_taro_edit_comment', array( $this, 'ajax' ) );
 	}
 
-
+	/**
+	 * Enqueue admin assets.
+	 *
+	 * @param string $page
+	 * @return void
+	 */
 	public function admin_enqueue_scripts( $page ) {
-		if ( 'comments_page_ms-comment' == $page ) {
+		if ( 'comments_page_ms-comment' === $page ) {
 			wp_enqueue_script( 'taro-comment-helper', $this->asset_url . 'assets/js/comment-helper.min.js', array( 'jquery-effects-highlight' ), '1.0', true );
 			wp_enqueue_style( 'taro-comment-helper', $this->asset_url . 'assets/css/comment-helper.css', null, '1.0' );
 		}
@@ -57,10 +62,10 @@ class CommentScreen extends AdminParts {
 				throw new \Exception( '該当するコメントが存在しませんでした。', 404 );
 			}
 			$status = $this->input->get( 'status' );
-			if ( $status == $comment->comment_approved ) {
+			if ( $status === $comment->comment_approved ) {
 				throw new \Exception( 'コメントのステータスはすでに変更済みです。', 500 );
 			}
-			if ( false === array_search( $status, array( '0', '1', 'spam', 'trash' ) ) ) {
+			if ( ! in_array( $status, array( '0', '1', 'spam', 'trash' ), true ) ) {
 				throw new \Exception( '無効なコメントステータスです。', 500 );
 			}
 			// OK.
@@ -68,7 +73,7 @@ class CommentScreen extends AdminParts {
 			if ( ! wp_set_comment_status( $comment_id, $status ) ) {
 				$real_comment = get_comment( $comment_id );
 				$this->models->comments->sync( $blog_id, $real_comment );
-				if ( $real_comment->comment_approved != $status ) {
+				if ( $real_comment->comment_approved !== $status ) {
 					throw new \Exception( 'ステータス変更に失敗しました。あとでまた試してください。画面を再読み込みすると直るかもしれません。', 500 );
 				}
 			}
@@ -106,7 +111,7 @@ HTML;
 	}
 
 	public function render() {
-		$status = isset( $_GET[ 'status' ] ) ? $this->input->get( 'status' ) : '0';
+		$status = isset( $_GET['status'] ) ? $this->input->get( 'status' ) : '0';
 		?>
 		<div class="wrap">
 			<h2><i class="dashicons dashicons-format-chat"></i> コメント一括管理</h2>
@@ -124,13 +129,13 @@ HTML;
 					$approved = strval( $approved );
 					$count    = $this->models->comments->count( $approved );
 					echo '<li>';
-					if ( $status == $approved ) {
+					if ( $status === $approved ) {
 						printf( '<strong>%s</strong>', $link );
 					} else {
 						printf( '<a href="%s">%s</a>', admin_url( 'edit-comments.php?page=ms-comment&status=' . $approved ), $link );
 					}
 					printf( '<span class="count">(<span>%s</span>)</span>', number_format_i18n( $count ) );
-					if ( 'trash' != $approved ) {
+					if ( 'trash' !== $approved ) {
 						echo ' |';
 					}
 					echo '</li>';
@@ -138,9 +143,9 @@ HTML;
 
 				?>
 			</ul>
-			<form action="<?php echo admin_url( 'edit-comments.php' ) ?>" method="get">
+			<form action="<?php echo admin_url( 'edit-comments.php' ); ?>" method="get">
 				<input type="hidden" name="page" value="ms-comment" />
-				<input type="hidden" name="status" value="<?php echo esc_attr( $status ) ?>" />
+				<input type="hidden" name="status" value="<?php echo esc_attr( $status ); ?>" />
 				<?php
 				$table = new CommentTable( array(), $status );
 				$table->prepare_items();

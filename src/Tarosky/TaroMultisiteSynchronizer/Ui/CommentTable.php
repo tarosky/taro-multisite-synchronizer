@@ -56,13 +56,12 @@ class CommentTable extends \WP_List_Table {
 			$this->get_sortable_columns(),
 		);
 
-
 		$wheres = array(
 			$this->db->prepare( 'comment_approved = %s', $this->status ),
 		);
 
-		if ( isset( $_GET[ 's' ] ) && ! empty( $_GET[ 's' ] ) ) {
-			$eq       = strval( $_GET[ 's' ] );
+		if ( isset( $_GET['s'] ) && ! empty( $_GET['s'] ) ) {
+			$eq       = strval( $_GET['s'] );
 			$like     = '%' . $eq . '%';
 			$s_query  = <<<SQL
 				(  comment_author_IP = %s
@@ -73,7 +72,7 @@ SQL;
 			$wheres[] = $this->db->prepare( $s_query, $eq, $like, $like, $like );
 		}
 
-		$where_clause = "WHERE " . implode( ' AND ', $wheres );
+		$where_clause = 'WHERE ' . implode( ' AND ', $wheres );
 
 		$offset = ( max( 1, $this->get_pagenum() ) - 1 ) * $this->per_page;
 
@@ -84,11 +83,10 @@ SQL;
 			LIMIT {$offset}, {$this->per_page}
 SQL;
 
-
 		$this->items = $this->db->get_results( $query );
 
 		$this->set_pagination_args( array(
-			'total_items' => $this->db->get_var( "SELECT FOUND_ROWS()" ),
+			'total_items' => $this->db->get_var( 'SELECT FOUND_ROWS()' ),
 			'per_page'    => $this->per_page,
 		) );
 	}
@@ -146,7 +144,7 @@ HTML;
 
 				return sprintf( $html,
 					esc_url( $comment->comment_author_url ), esc_html( $comment->comment_author ),
-					esc_url( admin_url( "edit-comments.php?page=ms-comment&s={$comment->comment_author_IP}&status={$this->status}" ) ), $comment->comment_author_IP );
+				esc_url( admin_url( "edit-comments.php?page=ms-comment&s={$comment->comment_author_IP}&status={$this->status}" ) ), $comment->comment_author_IP );
 
 				break;
 			default:
@@ -209,7 +207,8 @@ HTML;
 			$labels[] = '<span class="feature"><span class="dashicons dashicons-info"></span> 長文</span>';
 		}
 		if ( preg_match( '/https?:\/\//u', $comment_text ) ) {
-			$labels[] = '<span class="feature"><span class="dashicons dashicons-shield"></span> 含URL</span>';;
+			$labels[] = '<span class="feature"><span class="dashicons dashicons-shield"></span> 含URL</span>';
+
 		}
 		$html  = <<<HTML
 			<small class="comment-type">%s @ <em>%s</em> %s</small>
@@ -228,7 +227,7 @@ HTML;
 		switch ( $comment->comment_approved ) {
 			case 'spam':
 			case 'trash':
-				$links[ 'fix' ] = sprintf( '<a href="%s">修正する</a>', admin_url( 'edit-comments.php?comment_status=' . $comment->comment_approved ) );
+				$links['fix'] = sprintf( '<a href="%s">修正する</a>', admin_url( 'edit-comments.php?comment_status=' . $comment->comment_approved ) );
 				switch_to_blog( 1 );
 				break;
 			default:
@@ -242,9 +241,9 @@ HTML;
 					'trash'     => sprintf( '<a href="%s">ゴミ箱</a>', admin_url( 'admin-ajax.php?action=taro_edit_comment&b=' . $comment->blog_id . '&c=' . $comment->comment_ID . '&status=trash&_wpnonce=' . $this->nonce ) ),
 				) );
 				if ( '1' === $comment->comment_approved ) {
-					unset( $links[ 'approve' ] );
+					unset( $links['approve'] );
 				} else {
-					unset( $links[ 'unapprove' ] );
+					unset( $links['unapprove'] );
 				}
 				break;
 		}
@@ -275,7 +274,7 @@ HTML;
 			admin_url( 'edit-comments.php' ), esc_html( get_bloginfo( 'name' ) ),
 			get_permalink( $post ), get_the_title( $post ),
 			$post->comment_count,
-			admin_url( 'edit-comments.php?p=' . $post->ID ) );
+		admin_url( 'edit-comments.php?p=' . $post->ID ) );
 		switch_to_blog( 1 );
 
 		return $return;
@@ -293,15 +292,15 @@ HTML;
 			'spam'      => 'スパムにする',
 			'trash'     => 'ゴミ箱に入れる',
 		);
-		if ( false !== array_search( $this->status, array( 'spam', 'trash' ) ) ) {
+		if ( in_array( $this->status, [ 'spam', 'trash' ], true ) ) {
 			return array();
 		}
 		switch ( $this->status ) {
 			case '0':
-				unset( $actions[ 'unapprove' ] );
+				unset( $actions['unapprove'] );
 				break;
 			case '1':
-				unset( $actions[ 'approve' ] );
+				unset( $actions['approve'] );
 				break;
 		}
 

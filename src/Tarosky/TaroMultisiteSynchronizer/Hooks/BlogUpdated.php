@@ -66,7 +66,7 @@ class BlogUpdated extends Singleton {
 		$should_change_blog = false;
 		if ( is_null( $blog_id ) ) {
 			$blog_id = get_current_blog_id();
-		} elseif ( $blog_id !== get_current_blog_id() ) {
+		} elseif ( get_current_blog_id() !== $blog_id ) {
 			$should_change_blog = true;
 		} else {
 			$blog_id = get_current_blog_id();
