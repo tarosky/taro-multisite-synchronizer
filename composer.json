@@ -1,5 +1,6 @@
 {
     "name": "tarosky/taro-multisite-synchronizer",
+	"description": "A WordPress plugin to sync posts and comments through network.",
     "type": "wordpress-plugin",
     "license": "GPL-3.0-or-later",
     "autoload": {
