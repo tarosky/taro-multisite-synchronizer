@@ -88,6 +88,7 @@ class NetworkPostsRenderer extends RendererPattern {
 			$id = trim( $id );
 			return ( is_numeric( $id ) && $id > 0 ) ? $id : false;
 		}, explode( ',', $attributes['blog_ids'] ) ) ) );
+		$attributes = apply_filters( 'taroms_network_posts_list_block_arguments', $attributes, $content );
 		return taroms_network_posts_list( $attributes ) ?: __( 'No posts found.', 'taroms' );
 	}
 }

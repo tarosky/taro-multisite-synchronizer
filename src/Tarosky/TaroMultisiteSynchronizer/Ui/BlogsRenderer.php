@@ -100,6 +100,7 @@ class BlogsRenderer extends RendererPattern {
 			$attributes['site__not_in'] = get_current_blog_id();
 		}
 		unset( $attributes['exclude_self'] );
+		$attributes = apply_filters( 'taroms_blog_list_block_arguments', $attributes, $content );
 		return taroms_blog_list( $attributes ) ?: __( 'No Blog found.', 'taroms' );
 	}
 
